@@ -48,4 +48,18 @@ router.post("/deleteFeed", (req, res) => {
   }
 });
 
+router.post("/editFeed", (req, res) => {
+  try {
+    const { id, newTitle, newContent } = req.body;
+    const storeRes = feedStore.editItem({ id: parseInt(id as string, 10), newTitle, newContent });
+    if (storeRes) {
+      res.json({ isOK: true });
+    } else {
+      res.status(500).json({ isOK: false });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e });
+  }
+})
+
 export default router;

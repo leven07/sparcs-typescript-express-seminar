@@ -30,6 +30,19 @@ class FeedDB {
     if (BItemDeleted) this.itemCount--;
     return BItemDeleted;
   };
+
+  editItem = (item: { id: number; newTitle: string; newContent: string; }) => {
+    let BItemEdited = false;
+    this.LDataDB = this.LDataDB.map((value) => {
+      const match = value.id === this.id;
+      if (match) {
+        BItemEdited = true;
+        return { id: item.id, title: item.newTitle, content: item.newContent };
+      }
+      return value;
+    });
+    return BItemEdited;
+  }
 }
 
 export default FeedDB.getInst();
