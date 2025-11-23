@@ -34,14 +34,33 @@ router.get('/getList', (req, res) => {
 router.post('/editFeed', (req, res) => {
     try {
         const {groceryName, newQuant} = req.body;
+        let SItemEdited = false;
         groceryList.forEach((grocery) => {
             if (grocery.groceryName === groceryName) {
+                SItemEdited = true;
                 grocery.quant = newQuant;
             }
         });
-        res.json({ success: true });
+        res.json({ success: SItemEdited });
     } catch (e) {
-        res.status(500).json({ error: e })
+        res.status(500).json({ error: e });
+    }
+})
+
+router.post('/deleteFeed', (req, res) =>{
+    try {
+        const groceryName = req.body;
+        let BItemDeleted = false;
+        groceryList.filter((grocery) => {
+            if (grocery.groceryName === groceryName) {
+                BItemDeleted = true;
+                return false;
+            }
+            return true;
+        })
+        res.json({ success: BItemDeleted });
+    } catch (e) {
+        res.status(500).json({ error: e });
     }
 })
 
